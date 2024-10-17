@@ -27,6 +27,8 @@
         <activity android:name="com.example.eadapp.activity.OrderTrackingActivity" />
         <activity android:name="com.example.eadapp.activity.ProductDetailActivity" />
         <activity android:name="com.example.eadapp.activity.VendorFeedbackActivity" />
+        <activity android:name="com.example.eadapp.activity.PaymentGatewayActivity" />
+
 
 
     </application>

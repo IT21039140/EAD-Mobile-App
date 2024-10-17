@@ -85,9 +85,12 @@ public class MainActivity extends BaseActivity {
                     productList = response.body();
 
                     // Convert Base64 image string to Bitmap for each product
+                    int i=0;
                     for (Product product : productList) {
                         if (product.getImage() != null && !product.getImage().isEmpty()) {
                             product.setBitmapImage(decodeBase64Image(product.getImage()));
+                            productList.get(i).setBitmapImage(decodeBase64Image(product.getImage()));
+                            i++;
                         }
                     }
 

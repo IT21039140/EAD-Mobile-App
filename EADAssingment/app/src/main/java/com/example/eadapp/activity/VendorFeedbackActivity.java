@@ -57,7 +57,6 @@ public class VendorFeedbackActivity extends BaseActivity {
 
         // Retrieve the vendor ID and name passed from the intent
         vendorId = getIntent().getStringExtra("vendor_id");
-        vendorId="66faae2e1a174fd88fee8e5d";
         String vendorName = getIntent().getStringExtra("vendor_name");
 
         // Retrieve token and userId (CustomerId) from SharedPreferences
@@ -174,12 +173,13 @@ public class VendorFeedbackActivity extends BaseActivity {
         Log.i(TAG, "token " +token);
 
 
-        Call<JsonObject> call = userApi.addVendorComment("Bearer " + token, vendorId, feedbackPayload);
+//        Call<JsonObject> call = userApi.addVendorComment("Bearer " + token, vendorId, feedbackPayload);
+        Call<JsonObject> call = userApi.addVendorComment("Bearer " + token,vendorId , feedbackPayload);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.i(TAG, "feedbackPayload " +response.body());
+                Log.i(TAG, "feedbackResponse " +response);
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(VendorFeedbackActivity.this, "Feedback submitted successfully.", Toast.LENGTH_LONG).show();
                     // Update UI with new feedback

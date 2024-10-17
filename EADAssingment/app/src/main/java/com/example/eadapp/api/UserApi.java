@@ -3,6 +3,8 @@ package com.example.eadapp.api;
 import com.example.eadapp.data.LoginRequest;
 import com.example.eadapp.data.LoginResponse;
 import com.example.eadapp.data.Order;
+import com.example.eadapp.data.OrderRequest;
+import com.example.eadapp.data.OrderResponse;
 import com.example.eadapp.data.Product;
 import com.example.eadapp.data.RegisterRequest;
 import com.example.eadapp.data.Vendor;
@@ -38,7 +40,7 @@ public interface UserApi {
 
     @GET("api/users/{userId}")
     Call<Vendor> getVendorDetails(@Path("userId") String vendorId);
-    @POST("vendor/add-comment/{vendorId}")
+    @POST("api/vendor/add-comment/{vendorId}")
     Call<JsonObject> addVendorComment(
             @Header("Authorization") String authHeader,
             @Path("vendorId") String vendorId,
@@ -47,5 +49,7 @@ public interface UserApi {
 
     @GET("/api/product/getAll")
     Call<List<Product>> getAllProducts();
+    @POST("/api/orders")
+    Call<OrderResponse> placeOrder(@Header("Authorization") String token,@Body OrderRequest orderRequest);
 
 }

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class ProductAdapterImpl extends RecyclerView.Adapter<ProductAdapterImpl.
     private List<Product> productList;
     private Context context;
 
+    private static final String TAG = "ProductAdapterImpl";
     public ProductAdapterImpl(Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
@@ -52,28 +54,35 @@ public class ProductAdapterImpl extends RecyclerView.Adapter<ProductAdapterImpl.
         holder.vendorName.setText(product.getVendorName());
 
         // Convert base64 image string to Bitmap
-        byte[] decodedString = Base64.decode(product.getImage(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        holder.productImage.setImageBitmap(decodedByte);
+        Log.i(TAG,"product.getImage()"+product.getImage());
+//        byte[] decodedString = Base64.decode(product.getImage(), Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        holder.productImage.setImageBitmap(product.getBitmapImage());
 
         // Save the image to a file and get the file path
-        String imagePath = saveImageToFile(decodedByte, product.getName());
+//        String imagePath = saveImageToFile(decodedByte, product.getName());
 
         // Handle product item click
         holder.itemView.setOnClickListener(v -> {
             // Navigate to ProductDetailActivity and pass product details
             Intent intent = new Intent(context, ProductDetailActivity.class);
+            intent.putExtra("id",product.getId());
+            intent.putExtra("productId",product.getProductID());
             intent.putExtra("product_name", product.getName());
             intent.putExtra("product_price", product.getPrice());
-            intent.putExtra("product_description", product.getDescription());
-            intent.putExtra("product_quantity", product.getQuantity());
+            intent.putExtra("product_description", "asdfadsfghgsdfgsergdfvdfbxgb");
+//            intent.putExtra("product_quantity", product.getQuantity());
+            intent.putExtra("product_quantity", "1");
 //            intent.putExtra("vendor_name", product.getVendorName());
 //            intent.putExtra("vendor_id", product.getVendorId());
             intent.putExtra("vendor_name", "xzy");
-            intent.putExtra("vendor_id", "66faae2e1a174fd88fee8e5d");
+            intent.putExtra("vendor_id",  product.getDescription());
+            intent.putExtra("image",product.getImage());
+
+            Log.i(TAG,"product id "+product.getProductID()+" and Id "+product.getId());
 
             // Pass the image file path instead of Base64
-            intent.putExtra("product_image_path", imagePath);
+            intent.putExtra("product_image_path", product.getImage());
             context.startActivity(intent);
         });
 
@@ -81,8 +90,8 @@ public class ProductAdapterImpl extends RecyclerView.Adapter<ProductAdapterImpl.
         holder.vendorName.setOnClickListener(v -> {
             // Navigate to VendorFeedbackActivity and pass vendorId
             Intent intent = new Intent(context, VendorFeedbackActivity.class);
-            intent.putExtra("vendor_name", product.getVendorName());
-            intent.putExtra("vendor_id", product.getVendorId());
+            intent.putExtra("vendor_name", "xzy");
+            intent.putExtra("vendor_id", product.getDescription());
             context.startActivity(intent);
         });
     }
